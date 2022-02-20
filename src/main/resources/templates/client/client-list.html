@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Список клиентов</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+</head>
+<body>
+<div class="container my-5">
+    <div class="row">
+        <div class="col-md-6">
+            <a href="/" class="btn btn-light">На главную</a>
+            <a href="/client/add" class="btn btn-primary">Добавить клиента</a>
+            <h3 th:if="${clients.isEmpty()}">Нет текущих клиентов!</h3>
+            <div th:if="${!clients.isEmpty()}">
+                <h2 class="my-5">Клиенты</h2>
+                <table class="table table-striped table-responsive-md">
+                    <thead>
+                    <tr>
+                        <th>Имя</th>
+                        <th>Адрес</th>
+                        <th>Телефон</th>
+                        <th>Операции</th>
+                        <th>Заявка</th>
+                        <th>Сотрудник</th>
+                        <th>Редактировать</th>
+                        <th>Удалить</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="client : ${clients}">
+                        <td th:text="${client.name}"></td>
+                        <td th:text="${client.address}"></td>
+                        <td th:text="${client.phone}"></td>
+                        <td th:text="${client.operations}"></td>
+                        <td th:text="${client.request.name + ', ' + client.request.price + ', ' + client.request.type}"></td>
+                        <td th:text="${client.employee}"></td>
+                        <td><a th:href="@{/client/edit/{id}(id=${client.id})}" class="btn btn-primary">Редактировать</a></td>
+                        <td><a th:href="@{/client/delete/{id}(id=${client.id})}" class="btn btn-danger">Удалить</a></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
